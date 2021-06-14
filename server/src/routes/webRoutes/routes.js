@@ -10,9 +10,7 @@ const { csrfProtection, parseForm } = require('../../middlewares/csrfToken');
 
 
 // *** web Routes 
-router.get('/login', [sessionCheckPublic, csrfProtection], AuthController.login);
 
-router.post('/authenticate-user', [sessionCheckPublic, body('email').isEmail().withMessage('Email is Required & Email Must be Valid Email'), body('password').isLength({ min: 8 }).withMessage('Password is Required & Character length Must be more than 8'), validationError(), parseForm, csrfProtection], AuthController.authenticate);
 
 // (req, res) => {
 //     let form = '';

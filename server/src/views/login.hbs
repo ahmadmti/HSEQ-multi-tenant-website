@@ -20,7 +20,7 @@
 
             </div>
 
-            <form method="post" action="/v1/authenticate-user">
+            <form method="post" action="/v1/auth/authenticate-user">
                 <div class="card-body">
                     {{#if errors}}
 
@@ -40,7 +40,8 @@
                         <div class="form-group">
                             <input type="hidden" name="_csrf" value="{{ csrf_token }}" />
                             <label>Email</label>
-                            <input class="form-control" type="email" required="" value="{{form.email}}" name="email" />
+                            <input class="form-control {{shortif errors.email 'is-invalid' ''}}" type=" email"
+                                required="" value="{{form.email}}" name="email" />
                             {{#if errors.email}}
                             <div class="invalid-feedback d-block">
                                 {{ errors.email }}
@@ -49,7 +50,9 @@
                         </div>
                         <div class="form-group">
                             <label>Password</label>
-                            <input minlength="8" type="password" class="form-control" required="" name="password" />
+                            <input minlength="8" type="password"
+                                class="form-control {{shortif errors.email 'is-invalid' ''}}" required=""
+                                name="password" />
                             {{#if errors.password}}
                             <div class="invalid-feedback d-block">
                                 {{ errors.password }}

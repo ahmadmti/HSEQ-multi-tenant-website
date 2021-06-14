@@ -20,11 +20,27 @@ let AuthController = {
     } catch (e) {
       console.log(e);
       req.flash('error', [{ msg: 'Server Error' }])
-      return res.redirect('/v1/login')
+      return res.redirect('/v1/auth/login')
     }
   },
-  authenticate: (req, res) => {
-    res.send('fds');
+  authenticate: async (req, res) => {
+    try {
+      let { email, password } = req.body;
+      let user = await commonDBConnection('users').where('email', email).first();
+      if (user && bcrypt.compareSync(password, user.password)) {
+        req.session.user = user
+        res.redirect('/v1/admin/dashboard');
+      } else {
+        req.flash('error', [{ 'msg': 'Invalid Credentials' }])
+        res.redirect('/v1/auth/login');
+      }
+
+    } catch (e) {
+      console.log(e);
+      req.flash('error', [{ 'msg': 'server error' }])
+      res.redirect('/v1/auth/login');
+    }
+
   }
 
   // webLogin: async (req, res) => {

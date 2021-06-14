@@ -6,6 +6,7 @@ exports.up = function (knex) {
         table.integer('role_id').nullable();
         table.string('password').nullable();
         table.boolean('status').defaultTo(1);
+        table.text('profile_img').nullable();
         table.timestamps(true, true);
     });
 };

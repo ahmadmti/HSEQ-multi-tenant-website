@@ -4,14 +4,11 @@ const jwt = require('jsonwebtoken');
 module.exports.sessionCheckProtected = function (req, res, next) {
     // Get auth token from the cookies
     const user = req.session.user;
-
     if (!user) {
-        res.redirect('/v1/login')
-
+        res.redirect('/v1/auth/login')
     } else {
         next();
     }
-
 };
 
 module.exports.sessionCheckPublic = function (req, res, next) {
@@ -19,7 +16,7 @@ module.exports.sessionCheckPublic = function (req, res, next) {
     const user = req.session.user;
 
     if (user) {
-        res.redirect('dashborad')
+        res.redirect('/v1/admin/dashboard')
 
     } else {
         next();
@@ -34,7 +31,7 @@ module.exports.onlyAdmin = function (req, res, next) {
     if (user.is_admin)
         next();
     else
-        res.redirect('/v1/dashborad');
+        res.redirect('/v1/admin/dashboard');
 };
 module.exports.onlyUser = function (req, res, next) {
     // Get auth token from the cookies

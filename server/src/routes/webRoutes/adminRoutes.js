@@ -3,14 +3,30 @@ const express = require('express');
 const { sessionCheckProtected, onlyAdmin } = require('../../middlewares/routeProctections');
 const { checkSubDomain } = require('../../middlewares/domainProtected');
 const router = express.Router();
-// const { AuthController } = require('../../controllers');
+const { HomeController } = require('../../controllers');
+const { validationError } = require('../../middlewares/FormValidationError');
+const { csrfProtection, parseForm } = require('../../middlewares/csrfToken');
 
-
-router.get('/dashborad', (req, res) => {
-    res.render('admin/Dashboard');
+router.get('/dashboard', [sessionCheckProtected], (req, res) => {
+    res.render('admin/DashBoard');
 })
 
+router.get('/company-list', [sessionCheckProtected], (req, res) => {
+    res.render('admin/CompanyList');
+})
 
+router.get('/create-company', [sessionCheckProtected, csrfProtection], HomeController.createCompanyForm);
+
+router.get('/profile', [sessionCheckProtected], (req, res) => {
+    res.render('admin/Profile');
+});
+
+router.post('/states', HomeController.getStates);
+
+router.post('/cities', HomeController.getCities);
+
+
+router.post('/check-company', HomeController.checkCompany);
 // router.get('/packages', [sessionCheckProtected, onlyAdmin, checkSubDomain], PackageController.packages);
 
 // router.get('/create-package', [sessionCheckProtected, onlyAdmin, checkSubDomain], (req, res) => {

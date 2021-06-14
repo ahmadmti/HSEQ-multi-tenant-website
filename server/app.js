@@ -2,7 +2,7 @@
 
 const express = require('express')
 require('./src/env')
-const { webRoutes, adminRoutes } = require('./src/routes')
+const { webRoutes, authRoute, adminRoutes } = require('./src/routes')
 const path = require('path')
 const compression = require('compression')
 const handlebars = require('express-handlebars')
@@ -97,6 +97,19 @@ app.engine(
     extname: '.hbs',
     partialsDir: __dirname + '/src/views/partials/',
     helpers: {
+      section: function (name, options) {
+        if (!this._sections) {
+          this._sections = {};
+          this._sections[name] = options.fn(this);
+          return null;
+        }
+      },
+      shortif: (condtion, ifValue, elseValue) => {
+        if (condtion)
+          return ifValue
+        else
+          return elseValue
+      }
     }
   })
 )
@@ -111,11 +124,12 @@ app.set('view engine', 'hbs')
 
 
 // Web Routes
+app.use('/v1/auth/', authRoute)
 app.use('/v1/', webRoutes)
 app.use('/v1/admin/', adminRoutes)
 
-app.get('/v1/', (req, res) => {
-  res.send('vfcd');
+app.get('*', (req, res) => {
+  res.redirect('/v1/auth/login');
 });
 
 //DataBase Backup

@@ -1,0 +1,343 @@
+{{> adminNavBar}}
+
+
+<main class="page-content">
+    <div class="container-fluid">
+        <div class="restaurant__form_block">
+            <div class="restaurant__content">
+                <div class="card">
+
+                    <div class="card-body">
+                        <h5 class="card-title">Create New Company</h5>
+                        {{#if errors}}
+
+                        {{#if errors.msg}}
+                        <div class="alert alert-danger">
+                            {{ errors.msg}}
+                        </div>
+                        {{/if }}
+
+                        {{/if}}
+                        {{#if message}}
+                        <div class="alert alert-success">
+                            {{ message }}
+                        </div>
+                        {{/if }}
+                        <form method="post" action="" id="project-submit">
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="company_name">Company Name:</label>
+                                        <input required="" name="company_name" type="text"
+                                            class="form-control {{shortif errors.company_name 'is-invalid' ''}}"
+                                            id="company_name" aria-describedby="company_name"
+                                            placeholder="Company Name">
+                                        {{#if errors.company_name}}
+                                        <div class="invalid-feedback d-block">
+                                            {{ errors.company_name }}
+                                        </div>
+                                        {{/if}}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="phoneNumber">Phone Number</label>
+                                        <input required="" name="phone_no" type="text"
+                                            class="form-control {{shortif errors.phone_no 'is-invalid' ''}}"
+                                            id="phoneNumber" aria-describedby="phoneNumber"
+                                            placeholder="Enter Phone Number">
+                                        {{#if errors.phone_no}}
+                                        <div class="invalid-feedback d-block">
+                                            {{ errors.phone_no }}
+                                        </div>
+                                        {{/if}}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">Country</label>
+                                        <select class="form-control {{shortif errors.country_id 'is-invalid' ''}}"
+                                            id="country_id" name="country_id" value="" required="">
+                                            <option value="">Select Country</option>
+
+                                            {{#each countries }}
+                                            <option value="{{ country_id }}">{{ country_name }}</option>
+                                            {{/each }}
+
+                                        </select>
+                                        {{#if errors.country_id}}
+                                        <div class="invalid-feedback d-block">
+                                            {{ errors.country_id }}
+                                        </div>
+                                        {{/if}}
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">State</label>
+                                        <select disabled=""
+                                            class="form-control {{shortif errors.state_id 'is-invalid' ''}}"
+                                            id="state_id" name="state_id" value="" required="">
+                                            <option value="">Select State</option>
+                                        </select>
+                                        {{#if errors.state_id}}
+                                        <div class="invalid-feedback d-block">
+                                            {{ errors.state_id }}
+                                        </div>
+                                        {{/if}}
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1">City</label>
+                                        <select disabled=""
+                                            class="form-control {{shortif errors.city_id 'is-invalid' ''}}" id="city_id"
+                                            name="city_id" value="" required="">
+                                            <option value="">Select City</option>
+                                        </select>
+                                        {{#if errors.city_id}}
+                                        <div class="invalid-feedback d-block">
+                                            {{ errors.city_id }}
+                                        </div>
+                                        {{/if}}
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+
+
+
+
+
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Domain Name</label>
+                                <div class="input-group mb-3 subDomain">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">http://</span>
+                                    </div>
+                                    <input required="" id="domain" name="domain" pattern="^[a-z0-9_-]*$" type="text"
+                                        class="form-control {{shortif errors.subdomain 'is-invalid' ''}}"
+                                        aria-label="Amount (to the nearest dollar)">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">.geeklone.com</span>
+                                    </div>
+                                </div>
+                                {{#if errors.subdomain}}
+                                <div class="invalid-feedback d-block">
+                                    {{ errors.subdomain }}
+                                </div>
+                                {{/if}}
+                                <div class="promp-box"><small id="message_domain" class="form-text"></small><span
+                                        id="available_name"></span></div>
+                                <small id="emailHelp"
+                                    class="form-text text-muted subDomain">http://hammertech.geeklone.com use also used
+                                    this way Allow(hammertech,smithpro)</small>
+                            </div>
+
+
+
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Company Admin Name</label>
+                                <input required="" name="admin_name" type="text"
+                                    class="form-control {{shortif errors.admin_name 'is-invalid' ''}}"
+                                    id="exampleInputEmail1" aria-describedby="emailHelp" placeholder='Enter Admin Name'>
+                                {{#if errors.admin_name}}
+                                <div class="invalid-feedback d-block">
+                                    {{ errors.admin_name }}
+                                </div>
+                                {{/if}}
+
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Admin Email Account</label>
+                                <input type="email" class="form-control {{shortif errors.admin_email 'is-invalid' ''}}"
+                                    id="admin_email" required="" name="admin_email" aria-describedby="emailHelp"
+                                    placeholder="Enter Admin Email Account">
+                                {{#if errors.admin_email}}
+                                <div class="invalid-feedback d-block">
+                                    {{ errors.admin_email }}
+                                </div>
+                                {{/if}}
+                            </div>
+
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Password</label>
+                                <input type="password"
+                                    class="form-control  {{shortif errors.admin_password 'is-invalid' ''}}"
+                                    id="exampleInputEmail1" required="" name="admin_password"
+                                    aria-describedby="emailHelp" placeholder="Enter Password">
+                                {{#if errors.admin_password}}
+                                <div class="invalid-feedback d-block">
+                                    {{ errors.admin_password }}
+                                </div>
+                                {{/if}}
+                            </div>
+
+
+
+
+
+
+                            <button type="submit" disabled="true" id="submit_rest" class="btn btn-primary">
+                                Submit</button>
+                        </form>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</main>
+{{#section 'scripts' }}
+<script type="text/javascript">
+
+
+    $(document).ready(function () {
+
+
+        $('#company_name').on('blur', async function (e) {
+
+            if (e.target.value) {
+
+                let value = ((e.target.value.toLowerCase().trim()).replace(/\s/g, ''));
+                try {
+                    let data = await authenticateCompany(e.target.value);
+                    console.log(data);
+                } catch (e) {
+                    console.log(e);
+                }
+
+                //   $('#domain').val(value);
+                // domainChecker(value);
+            }
+
+        });
+
+
+        $('#country_id').on('change', (e) => {
+            let value = e.target.value;
+            if (value) {
+                $.ajax({
+                    url: "/v1/admin/states",
+                    method: "post",
+                    data: { country_id: value },
+                    success: (data) => {
+                        $('#state_id').attr('disabled', false);
+
+                        $('#state_id  option').remove();
+                        $('#state_id').append(`<option value="">Select State</option>`);
+
+                        data.states.forEach((state, index) => {
+                            $('#state_id').append(`<option value="${state.states_id}">${state.states_name}</option>`);
+                        })
+
+                    }
+                })
+            }
+        });
+
+        $('#state_id').on('change', (e) => {
+            let value = e.target.value;
+            if (value) {
+                $.ajax({
+                    url: "/v1/admin/cities",
+                    method: "post",
+                    data: { state_id: value },
+                    success: (data) => {
+                        $('#city_id').attr('disabled', false);
+
+                        $('#city_id  option').remove();
+                        $('#city_id').append(`<option value="">Select City</option>`);
+
+                        data.cities.forEach((city, index) => {
+                            $('#city_id').append(`<option value="${city.city_id}">${city.city_name}</option>`);
+                        })
+
+                    }
+                })
+            }
+        });
+
+        function domainChecker(value) {
+            const re = /^[A-Za-z][A-Za-z0-9]*(?:_[A-Za-z0-9]+)*$/;
+            if (re.test(value)) {
+                if (value) {
+                    $.ajax({
+                        url: 'check-domain',
+                        method: 'POST',
+                        data: { domain: value.toLowerCase() },
+                        success: function (data) {
+                            if (data.status) {
+                                $('#submit_rest').attr('disabled', true);
+                                $('#message_domain').text(data.message);
+                                $('#message_domain').removeClass('text-success');
+                                $('#message_domain').addClass('text-danger');
+                                $('#message_domain').css('font-weight', 'bold');
+                                $('#domain').css('border', '2px solid red');
+                                $('#available_name').html('');
+                                data.domain.forEach(function (item) {
+                                    $('#available_name').append(`
+                            <span class="domain_guess text-success">${item.domain}</span>
+                            `);
+                                })
+
+
+                            } else {
+                                $('#available_name').html('');
+                                $('#submit_rest').attr('disabled', false);
+                                $('#domain').css('border', '1px solid green')
+                                $('#message_domain').text(data.message);
+                                $('#message_domain').removeClass('text-danger');
+                                $('#message_domain').addClass('text-success');
+                                $('#message_domain').css('font-weight', 'bold');
+                            }
+                        }
+                    })
+                }
+            } else {
+                $('#submit_rest').attr('disabled', true);
+                $('#message_domain').text(`Sub Domain is Not Valid`);
+                $('#message_domain').removeClass('text-success');
+                $('#message_domain').addClass('text-danger');
+                $('#message_domain').css('font-weight', 'bold');
+                $('#domain').css('border', '2px solid red');
+                $('#available_name').html('');
+            }
+        }
+
+        async function authenticateCompany(name) {
+            new Promise((resolve, reject) => {
+                $.ajax({
+                    url: "/v1/admin/check-company",
+                    "method": "post",
+                    data: { name },
+                    success: function (data) {
+                        return resolve(data);
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        return reject(errorThrown);
+                        console.log('error sate', textStatus)
+                    }
+                });
+            });
+        }
+    });
+</script>
+
+{{/section }}
