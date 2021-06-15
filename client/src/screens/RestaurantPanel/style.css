@@ -1,0 +1,109 @@
+.form_wrapper {
+    padding: 12px;
+}
+
+.basic-multi-select {
+    width: 100%;
+}
+
+.react-daterange-picker__wrapper {
+    border-radius: 6px;
+    border: none;
+}
+input[name='city_id'],.MuiAutocomplete-listbox{
+    text-transform:capitalize;
+}
+a:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
+a {
+    color: inherit;
+}
+
+.MuiListItem-root.Mui-selected,
+.MuiListItem-root.Mui-selected:hover {
+    background-color: #fff !important;
+    color: #ff6877 !important;
+}
+
+.MuiListItem-button:hover {
+    text-decoration: none;
+    background-color: #fff !important;
+}
+
+.MuiListItemIcon-root {
+    color: black !important;
+}
+
+.MuiButton-containedPrimary {
+    color: #fff;
+    background-color: #ff6877 !important;
+    border-color: #ff6877 !important;
+}
+
+.MuiTypography-colorTextSecondary {
+    color: #ff6877 !important;
+}
+
+.MuiTypography-body1 {
+    font-size: 14px !important;
+}
+
+body {
+    background: #f0f0fa !important;
+}
+
+.MuiTab-root {
+    /* width: 150px !important; */
+    min-width: 0px !important;
+}
+
+.ribbon {
+    margin: 0;
+    padding: 0;
+    background: #ff6877;
+    color: white;
+    /* padding: 1em 0; */
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translateX(30%) translateY(0%) rotate(45deg);
+    transform-origin: top left;
+}
+
+.ribbon:before,
+.ribbon:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    margin: 0 -1px;
+    /* tweak */
+    width: 100%;
+    height: 100%;
+    background: #ff6877;
+}
+
+.ribbon:before {
+    right: 100%;
+}
+
+.ribbon:after {
+    left: 100%;
+}
+
+
+/* .Mui-selected {
+    color: '#ff6877',
+} */
+
+
+/* .MuiTab-textColorPrimary {
+    color: white !important;
+}*/
+
+
+/* .Mui-selected {
+    color: black !important;
+} */

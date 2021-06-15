@@ -33,18 +33,8 @@ jQuery(function ($) {
 
 
 
-    $(document).on('click', '.domain_guess', function (e) {
-        var text = $(this).text();
-        $('#domain').val(text);
-        domainChecker(text);
 
-    })
 
-    $(document).on('blur', '#domain', function (e) {
-
-        domainChecker(e.target.value);
-
-    });
 
     function addDays(date, days) {
         var result = new Date(date);

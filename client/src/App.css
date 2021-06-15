@@ -1,0 +1,66 @@
+*{
+    font-family: 'Roboto';
+}
+a:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
+a {
+    color: inherit;
+}
+.MuiCircularProgress-svg{
+    color: #ff6877;
+}
+.MuiAppBar-colorSecondary{
+    background-color: #ff6877;
+}
+
+/* .makeStyles-drawerOpen-41{
+
+} */
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+
+/* Track */
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+
+/* Handle */
+
+::-webkit-scrollbar-thumb {
+    background: #eee;
+    border-radius: 6px;
+}
+
+
+/* Handle on hover */
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(221, 221, 221);
+}
+
+a:hover {
+    text-decoration: none;
+    color: inherit;
+}
+
+a {
+    color: inherit;
+}
+
+.MuiButton-containedPrimary {
+    color: #fff;
+    background-color: #ff6877 !important;
+    border-color: #ff6877 !important;
+}
+
+body {
+    background: #f0f0fa !important;
+}

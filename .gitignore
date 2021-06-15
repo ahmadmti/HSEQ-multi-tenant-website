@@ -5,6 +5,7 @@
 
 # Node artifact files
 server/node_modules/
+client/node_modules/
 dist/
 
 # Compiled Java class files

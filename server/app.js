@@ -136,12 +136,12 @@ app.get('*', (req, res) => {
 
 
 // Sub Domains handler Routes
-// app.get('*', (req, res) => {
-//   if (hasSubDomain(req)) {
-//     res.sendFile(path.join(__dirname, './build', 'index.html'))
-//   } else {
-//     res.redirect(`${process.env.DEFAULT_REDIRECT}`)
-//   }
-// })
+app.get('*', (req, res) => {
+  if (hasSubDomain(req)) {
+    res.sendFile(path.join(__dirname, './build', 'index.html'))
+  } else {
+    res.redirect(`${process.env.DEFAULT_REDIRECT}`)
+  }
+})
 // *** Listen
 server.listen(PORT, () => console.log(`Server is running on Port ${PORT}`))

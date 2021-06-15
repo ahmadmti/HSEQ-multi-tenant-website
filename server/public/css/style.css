@@ -192,7 +192,9 @@ a:hover{
 .sidebar-wrapper .sidebar-header .user-info > span {
   display: block;
 }
-
+#available_name{
+  text-transform: lowercase;
+}
 .sidebar-wrapper .sidebar-header .user-info .user-role {
   font-size: 12px;
 }

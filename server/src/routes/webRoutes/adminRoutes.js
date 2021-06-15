@@ -6,6 +6,9 @@ const router = express.Router();
 const { HomeController } = require('../../controllers');
 const { validationError } = require('../../middlewares/FormValidationError');
 const { csrfProtection, parseForm } = require('../../middlewares/csrfToken');
+const { registerCompanyRules } = require('../../middlewares/validationsRules');
+
+
 
 router.get('/dashboard', [sessionCheckProtected], (req, res) => {
     res.render('admin/DashBoard');
@@ -25,6 +28,9 @@ router.post('/states', HomeController.getStates);
 
 router.post('/cities', HomeController.getCities);
 
+router.post('/check-domain', HomeController.checkDomain);
+
+router.post('/register-company', registerCompanyRules, HomeController.registerCompany);
 
 router.post('/check-company', HomeController.checkCompany);
 // router.get('/packages', [sessionCheckProtected, onlyAdmin, checkSubDomain], PackageController.packages);

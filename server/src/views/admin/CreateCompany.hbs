@@ -23,13 +23,13 @@
                             {{ message }}
                         </div>
                         {{/if }}
-                        <form method="post" action="" id="project-submit">
-
+                        <form method="post" action="/v1/admin/register-company" id="project-submit">
+                            <input type="hidden" name="_csrf" value="{{ csrf_token }}" />
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="company_name">Company Name:</label>
-                                        <input required="" name="company_name" type="text"
+                                        <input name="company_name" type="text" value="{{ form.company_name }}"
                                             class="form-control {{shortif errors.company_name 'is-invalid' ''}}"
                                             id="company_name" aria-describedby="company_name"
                                             placeholder="Company Name">
@@ -43,7 +43,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="phoneNumber">Phone Number</label>
-                                        <input required="" name="phone_no" type="text"
+                                        <input name="phone_no" type="text" value="{{ form.phone_no }}"
                                             class="form-control {{shortif errors.phone_no 'is-invalid' ''}}"
                                             id="phoneNumber" aria-describedby="phoneNumber"
                                             placeholder="Enter Phone Number">
@@ -61,8 +61,8 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Country</label>
-                                        <select class="form-control {{shortif errors.country_id 'is-invalid' ''}}"
-                                            id="country_id" name="country_id" value="" required="">
+                                        <select class="form-control  {{shortif errors.country_id 'is-invalid' ''}}"
+                                            id="country_id" name="country_id" value="{{ form.country_id }}">
                                             <option value="">Select Country</option>
 
                                             {{#each countries }}
@@ -83,7 +83,7 @@
                                         <label for="exampleInputEmail1">State</label>
                                         <select disabled=""
                                             class="form-control {{shortif errors.state_id 'is-invalid' ''}}"
-                                            id="state_id" name="state_id" value="" required="">
+                                            id="state_id" name="state_id" value="{{ form.state_id }}">
                                             <option value="">Select State</option>
                                         </select>
                                         {{#if errors.state_id}}
@@ -100,9 +100,9 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">City</label>
-                                        <select disabled=""
+                                        <select disabled="" value="{{ form.city_id }}"
                                             class="form-control {{shortif errors.city_id 'is-invalid' ''}}" id="city_id"
-                                            name="city_id" value="" required="">
+                                            name="city_id" value="">
                                             <option value="">Select City</option>
                                         </select>
                                         {{#if errors.city_id}}
@@ -127,7 +127,8 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">http://</span>
                                     </div>
-                                    <input required="" id="domain" name="domain" pattern="^[a-z0-9_-]*$" type="text"
+                                    <input id="domain" value="{{ form.subdomain }}" name="subdomain"
+                                        pattern="^[a-z0-9_-]*$" type="text"
                                         class="form-control {{shortif errors.subdomain 'is-invalid' ''}}"
                                         aria-label="Amount (to the nearest dollar)">
                                     <div class="input-group-append">
@@ -150,7 +151,7 @@
 
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Company Admin Name</label>
-                                <input required="" name="admin_name" type="text"
+                                <input name="admin_name" value="{{ form.admin_name }}" type="text"
                                     class="form-control {{shortif errors.admin_name 'is-invalid' ''}}"
                                     id="exampleInputEmail1" aria-describedby="emailHelp" placeholder='Enter Admin Name'>
                                 {{#if errors.admin_name}}
@@ -165,8 +166,8 @@
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Admin Email Account</label>
                                 <input type="email" class="form-control {{shortif errors.admin_email 'is-invalid' ''}}"
-                                    id="admin_email" required="" name="admin_email" aria-describedby="emailHelp"
-                                    placeholder="Enter Admin Email Account">
+                                    id="admin_email" name="admin_email" aria-describedby="emailHelp"
+                                    placeholder="Enter Admin Email Account" value="{{ form.admin_email }}">
                                 {{#if errors.admin_email}}
                                 <div class="invalid-feedback d-block">
                                     {{ errors.admin_email }}
@@ -178,8 +179,8 @@
                                 <label for="exampleInputEmail1">Password</label>
                                 <input type="password"
                                     class="form-control  {{shortif errors.admin_password 'is-invalid' ''}}"
-                                    id="exampleInputEmail1" required="" name="admin_password"
-                                    aria-describedby="emailHelp" placeholder="Enter Password">
+                                    id="exampleInputEmail1" name="admin_password" aria-describedby="emailHelp"
+                                    placeholder="Enter Password">
                                 {{#if errors.admin_password}}
                                 <div class="invalid-feedback d-block">
                                     {{ errors.admin_password }}
@@ -187,12 +188,7 @@
                                 {{/if}}
                             </div>
 
-
-
-
-
-
-                            <button type="submit" disabled="true" id="submit_rest" class="btn btn-primary">
+                            <button type="submit" id="submit_rest" class="btn btn-primary">
                                 Submit</button>
                         </form>
 
@@ -209,26 +205,86 @@
 
 
     $(document).ready(function () {
+        function domainChecker(value) {
+            const re = /^[A-Za-z][A-Za-z0-9]*(?:_[A-Za-z0-9]+)*$/;
+            $('#message_domain').text(``);
 
+            if (re.test(value)) {
+                if (value) {
+                    $.ajax({
+                        url: '/v1/admin/check-domain',
+                        method: 'POST',
+                        data: { domain: value.toLowerCase() },
+                        success: function (data) {
 
+                            $('#submit_rest').attr('disabled', false);
+                            $('#message_domain').text(data.message);
+                            $('#message_domain').removeClass('text-danger');
+                            $('#message_domain').addClass('text-success');
+                            $('#message_domain').css('font-weight', 'bold');
+                            $('#domain').addClass('is-valid');
+                            $('#domain').removeClass('is-invalid');
+                            $('#available_name').html('');
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            console.log(XMLHttpRequest.responseJSON.suggestions);
+                            $('#submit_rest').attr('disabled', true);
+                            $('#message_domain').text(XMLHttpRequest.responseJSON.message);
+                            $('#message_domain').removeClass('text-success');
+                            $('#message_domain').addClass('text-danger');
+                            $('#message_domain').css('font-weight', 'bold');
+                            $('#domain').addClass('is-invalid');
+                            $('#domain').removeClass('is-valid');
+                            $('#available_name').html('');
+                            XMLHttpRequest.responseJSON.suggestions.forEach(function (item) {
+                                console.log(item.domain);
+                                $('#available_name').append(`
+                               <span class="domain_guess text-success">${item.domain}</span>
+                            `);
+                            })
+                        }
+                    })
+                }
+            } else {
+
+                $('#submit_rest').attr('disabled', true);
+                $('#message_domain').text(`Domain is Not Valid`);
+                $('#message_domain').removeClass('text-success');
+                $('#message_domain').addClass('text-danger');
+                $('#message_domain').css('font-weight', 'bold');
+                $('#domain').addClass('is-invalid');
+                $('#domain').removeClass('is-valid');
+                $('#available_name').html('');
+            }
+        }
+        $(document).on('click', '.domain_guess', function (e) {
+            var text = $(this).text();
+            $('#domain').val(text);
+            domainChecker(text);
+
+        })
         $('#company_name').on('blur', async function (e) {
 
             if (e.target.value) {
 
                 let value = ((e.target.value.toLowerCase().trim()).replace(/\s/g, ''));
-                try {
-                    let data = await authenticateCompany(e.target.value);
-                    console.log(data);
-                } catch (e) {
-                    console.log(e);
-                }
+                authenticateCompany(e.target.value)
+                    .then(res => {
+                        console.log(res);
+                        $('#domain').val(value);
+                        domainChecker(value);
+                    })
+                    .catch(error => {
+                        console.log('error', error.responseJSON);
+                    });
 
-                //   $('#domain').val(value);
-                // domainChecker(value);
+
             }
 
         });
-
+        $('#domain').on('blur', function (e) {
+            domainChecker(e.target.value);
+        });
 
         $('#country_id').on('change', (e) => {
             let value = e.target.value;
@@ -274,55 +330,10 @@
             }
         });
 
-        function domainChecker(value) {
-            const re = /^[A-Za-z][A-Za-z0-9]*(?:_[A-Za-z0-9]+)*$/;
-            if (re.test(value)) {
-                if (value) {
-                    $.ajax({
-                        url: 'check-domain',
-                        method: 'POST',
-                        data: { domain: value.toLowerCase() },
-                        success: function (data) {
-                            if (data.status) {
-                                $('#submit_rest').attr('disabled', true);
-                                $('#message_domain').text(data.message);
-                                $('#message_domain').removeClass('text-success');
-                                $('#message_domain').addClass('text-danger');
-                                $('#message_domain').css('font-weight', 'bold');
-                                $('#domain').css('border', '2px solid red');
-                                $('#available_name').html('');
-                                data.domain.forEach(function (item) {
-                                    $('#available_name').append(`
-                            <span class="domain_guess text-success">${item.domain}</span>
-                            `);
-                                })
 
-
-                            } else {
-                                $('#available_name').html('');
-                                $('#submit_rest').attr('disabled', false);
-                                $('#domain').css('border', '1px solid green')
-                                $('#message_domain').text(data.message);
-                                $('#message_domain').removeClass('text-danger');
-                                $('#message_domain').addClass('text-success');
-                                $('#message_domain').css('font-weight', 'bold');
-                            }
-                        }
-                    })
-                }
-            } else {
-                $('#submit_rest').attr('disabled', true);
-                $('#message_domain').text(`Sub Domain is Not Valid`);
-                $('#message_domain').removeClass('text-success');
-                $('#message_domain').addClass('text-danger');
-                $('#message_domain').css('font-weight', 'bold');
-                $('#domain').css('border', '2px solid red');
-                $('#available_name').html('');
-            }
-        }
 
         async function authenticateCompany(name) {
-            new Promise((resolve, reject) => {
+            return new Promise((resolve, reject) => {
                 $.ajax({
                     url: "/v1/admin/check-company",
                     "method": "post",
@@ -331,8 +342,8 @@
                         return resolve(data);
                     },
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
-                        return reject(errorThrown);
-                        console.log('error sate', textStatus)
+                        return reject(XMLHttpRequest);
+
                     }
                 });
             });
