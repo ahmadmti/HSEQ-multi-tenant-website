@@ -2,18 +2,18 @@
 
 const express = require('express')
 require('./src/env')
-const { webRoutes, authRoute, adminRoutes } = require('./src/routes')
+const { webRoutes, authRoute, adminRoutes, companyRoutes } = require('./src/routes');
 const path = require('path')
 const compression = require('compression')
 const handlebars = require('express-handlebars')
 const bodyParser = require('body-parser')
-// const { connectAllDb } = require('./src/dbConfig/connectionManger')
-// const connectionResolver = require('./src/middlewares/connectionResolver')
+const { connectAllDb } = require('./src/dbConfig/connectionManger')
+const connectionResolver = require('./src/middlewares/connectionResolver')
 const flash = require('connect-flash')
 const session = require('express-session')
 const cookieParser = require('cookie-parser')
 const cors = require('cors')
-// const { hasSubDomain } = require('./src/utils/subDomainManger');
+const { hasSubDomain } = require('./src/utils/subDomainManger');
 // const fileUpload = require('express-fileupload');
 // const socketIo = require('socket.io');
 
@@ -70,7 +70,7 @@ app.use(
 
 
 app.use(bodyParser.urlencoded({ extended: true }));
-// app.set('subdomain offset', process.env.SUB_DOMAIN_OFFSETS)
+app.set('subdomain offset', process.env.SUB_DOMAIN_OFFSETS)
 
 app.use(compression())
 
@@ -82,7 +82,7 @@ app.use('/public', express.static('public'))
 //   tempFileDir: '/tmp/'
 // }));
 
-// app.use(connectionResolver.resolve)
+app.use(connectionResolver.resolve)
 
 app.set('views', path.join(__dirname, 'src/views'))
 
@@ -118,19 +118,17 @@ app.set('view engine', 'hbs')
 
 // *** DB Config
 
-// connectAllDb()
+connectAllDb()
 
 // *** API Routes
-
+app.use('/api/company/', companyRoutes);
 
 // Web Routes
 app.use('/v1/auth/', authRoute)
 app.use('/v1/', webRoutes)
 app.use('/v1/admin/', adminRoutes)
 
-app.get('*', (req, res) => {
-  res.redirect('/v1/auth/login');
-});
+
 
 //DataBase Backup
 
@@ -138,6 +136,7 @@ app.get('*', (req, res) => {
 // Sub Domains handler Routes
 app.get('*', (req, res) => {
   if (hasSubDomain(req)) {
+    return res.send('Subdomin Working');
     res.sendFile(path.join(__dirname, './build', 'index.html'))
   } else {
     res.redirect(`${process.env.DEFAULT_REDIRECT}`)

@@ -1,13 +1,9 @@
 import React from 'react'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Checkbox from '@material-ui/core/Checkbox'
-import Grid from '@material-ui/core/Grid'
 import { makeStyles } from '@material-ui/core/styles'
 import { useHistory, Link } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
-import { sendForgotEmailLink } from '../../api/api.js'
+// import { sendForgotEmailLink } from '../../api/api.js'
 import { useForm, Controller } from 'react-hook-form'
 import { toast } from 'react-toastify'
 
@@ -28,38 +24,37 @@ export default function ForgotPasswordForm() {
   const [length, setLength] = React.useState(0)
   const [lengthTrue, setLengthTrue] = React.useState(false)
 
-  const { t } = useTranslation()
 
   const onSubmit = (data) => {
 
-    sendForgotEmailLink(data)
-      .then((res) => {
-        // console.log(res);
-        toast.success(res.data.message, {
-          position: 'top-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        })
-        history.push('/login')
-    
+    // sendForgotEmailLink(data)
+    //   .then((res) => {
+    //     // console.log(res);
+    //     toast.success(res.data.message, {
+    //       position: 'top-right',
+    //       autoClose: 5000,
+    //       hideProgressBar: false,
+    //       closeOnClick: true,
+    //       pauseOnHover: true,
+    //       draggable: true,
+    //       progress: undefined,
+    //     })
+    //     history.push('/login')
 
-      })
-      .catch((err) => {
-        // console.log(err);
-        toast.error(err.response.data.message, {
-          position: 'top-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        })
-      })
+
+    //   })
+    //   .catch((err) => {
+    //     // console.log(err);
+    //     toast.error(err.response.data.message, {
+    //       position: 'top-right',
+    //       autoClose: 5000,
+    //       hideProgressBar: false,
+    //       closeOnClick: true,
+    //       pauseOnHover: true,
+    //       draggable: true,
+    //       progress: undefined,
+    //     })
+    //   })
   }
 
   return (
@@ -79,11 +74,11 @@ export default function ForgotPasswordForm() {
               error={errors.email ? true : false}
               helperText={
                 errors.email ? (
-                  <span>{t("email.label")} {t("required")}  & {t("email.label")}  {t("valid")}</span>
+                  <span>Email is required</span>
                 ) : null
               }
               fullWidth
-              label={t('email.label')}
+              label={'Email'}
               autoComplete="email"
               autoFocus
             />
@@ -95,9 +90,9 @@ export default function ForgotPasswordForm() {
             pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
           }}
         />
-    
-  
-      
+
+
+
         <Button
           type="submit"
           fullWidth
@@ -105,9 +100,9 @@ export default function ForgotPasswordForm() {
           color="primary"
           className={classes.submit}
         >
-          {t('forgotPasswordRecovery.label')}
+          Send ForgetPassword Link
         </Button>
-     
+
       </form>
     </div>
   )

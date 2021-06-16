@@ -3,7 +3,7 @@ import axios from 'axios'
 // console.log(process.env.MIX_APP_URL);
 
 let instance = axios.create({
-  baseURL: `http://pizzahut.localhost:2000/api/`,
+  baseURL: `http://hammer.localhost:4000/api/`,
   withCredentials: true,
   headers: {
     'Content-Type': 'application/json',

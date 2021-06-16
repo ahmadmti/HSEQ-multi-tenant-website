@@ -23,10 +23,7 @@ function createConnectionConfig(tenant) {
 async function connectAllDb() {
     let tenants;
     try {
-        let date = new Date().toISOString().slice(0, 10)
-
-        tenants = await commonDBConnection.select('*').from('tenants').where('expire_on', '>=', date)
-            .where('status', 1).where('is_active', 1).where('payment_status', 1);
+        tenants = await commonDBConnection.select('*').from('tenants').where('is_active', 1);
     } catch (e) {
         console.log('error', e);
         return;

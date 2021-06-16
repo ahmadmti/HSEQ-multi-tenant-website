@@ -1,7 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import { useTranslation } from 'react-i18next'
-
 
 const FooterContentWraper = styled.div`
 display:block;
@@ -27,12 +25,11 @@ const ContentText = styled.p`
 
 
 export default function FooterContent() {
-    const { t, i18n } = useTranslation();
 
     return (
         <FooterContentWraper>
             <FooterContentBlock>
-                <ContentText>{t('developBy.label')} <a href="https://www.geeklone.com" rel="noreferrer" target="_blank">Geeklone Technology</a> v(4.2)</ContentText>
+                <ContentText>Develop by <a href="https://www.geeklone.com" rel="noreferrer" target="_blank">Geeklone Technology</a> v(4.2)</ContentText>
             </FooterContentBlock>
         </FooterContentWraper>
     )

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
-import PageHeadTitle from '../RestaurantPanel/SharedComponent/PageHeadTitle'
+import PageHeadTitle from '../CompanyPanel/SharedComponent/PageHeadTitle'
 import { Box, Grid, Button, TextField, Container } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -11,7 +11,6 @@ import ToastContext from '../../context/ToastContext';
 import { useDispatch } from "react-redux";
 import { toggle } from '../../actions/pacerActions';
 
-// import { toggle } from '../../../actions/pacerActions';
 import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles((theme) => ({
@@ -29,7 +28,7 @@ export default function ChangePassword() {
   const dispatch = useDispatch();
   const [length, setLength] = React.useState(0)
   const [lengthTrue, setLengthTrue] = React.useState(false)
-  
+
   const [value, setNameValue] = React.useState('')
 
   const toastOptions = useContext(ToastContext);
@@ -39,7 +38,6 @@ export default function ChangePassword() {
     shouldUnregister: true
   });
 
-  const { t } = useTranslation()
   const onSubmit = (data) => {
     setLengthTrue(true)
     dispatch(toggle())
@@ -71,11 +69,11 @@ export default function ChangePassword() {
                           as={<TextField
                             variant="outlined"
                             margin="dense"
-                        
-                            error={errors.old_password ? true : false}
-                            helperText={errors.old_password ? <span>{t('old_password')} {t("required")}</span> : null}
 
-                            style={{ width: '70%' }} label={t('old_password')}
+                            error={errors.old_password ? true : false}
+                            helperText={errors.old_password ? <span>Old Password is required</span> : null}
+
+                            style={{ width: '70%' }} label={'Old Password'}
                             type="text"
                             id="text"
 
@@ -86,7 +84,7 @@ export default function ChangePassword() {
                             required: 'required',
                           }}
                         />
-                     
+
                       </div>
 
                     </Grid>
@@ -102,9 +100,9 @@ export default function ChangePassword() {
                               setLength(e.target.value.length)
                             }}
                             error={errors.new_password ? true : false}
-                            helperText={errors.new_password ? <span>{t('new_password')} {t("required")}</span> : null}
+                            helperText={errors.new_password ? <span>New Password is required</span> : null}
 
-                            style={{ width: '70%' }} label={t('new_password')}
+                            style={{ width: '70%' }} label={'New Password'}
                             type="text"
                             id="text"
 
@@ -129,7 +127,7 @@ export default function ChangePassword() {
 
                     <Grid item md={12} sm={12} xs={12} className="text-center">
                       <Button disabled={!isValid} variant="contained" type="submit" color="primary">
-                        {t('submit.label')}
+                        Submit
                       </Button>
                     </Grid>
                   </Grid>

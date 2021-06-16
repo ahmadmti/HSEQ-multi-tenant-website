@@ -11,8 +11,7 @@ import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
 import { useSelector } from 'react-redux';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-import { enUS, deDE } from '@material-ui/core/locale';
+import { ThemeProvider } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(theme => ({
     backdrop: {
@@ -37,9 +36,7 @@ const toastOptions = {
 
 
 function App() {
-    let lang = (localStorage.getItem('default_lang') || 'de');
-    const theme = createMuiTheme({
-    }, (lang == 'de' ? deDE : enUS));
+
 
     let pacer = useSelector(state => state.pacer);
     const [company, setCompany] = React.useState({});
@@ -59,7 +56,7 @@ function App() {
         companyDetail();
     }, [])
     return (
-        <ThemeProvider theme={theme}>
+        <ThemeProvider >
             <ToastContext.Provider value={toastOptions}>
                 <CompanyContext.Provider value={company}>
                     <div className="App" >

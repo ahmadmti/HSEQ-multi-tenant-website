@@ -6,7 +6,6 @@ import Checkbox from '@material-ui/core/Checkbox'
 import Grid from '@material-ui/core/Grid'
 import { makeStyles } from '@material-ui/core/styles'
 import { useHistory, Link } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
 import { login } from '../../api/api.js'
 import { useForm, Controller } from 'react-hook-form'
 import { toast } from 'react-toastify'
@@ -28,44 +27,43 @@ export default function LoginForm() {
   const [length, setLength] = React.useState(0)
   const [lengthTrue, setLengthTrue] = React.useState(false)
 
-  const { t } = useTranslation()
 
   const onSubmit = (data) => {
     // console.log(data)
     setLengthTrue(true)
-    login(data)
-      .then((res) => {
-        // console.log(res);
-        toast.success(res.data.message, {
-          position: 'top-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        })
-        localStorage.setItem(
-          'auth_user',
-          JSON.stringify({
-            token: res.data.token,
-            user: res.data.user,
-          })
-        )
-        history.push('/restaurant')
-      })
-      .catch((err) => {
-        // console.log(err);
-        toast.error(err.response.data.message, {
-          position: 'top-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        })
-      })
+    // login(data)
+    //   .then((res) => {
+    //     // console.log(res);
+    //     toast.success(res.data.message, {
+    //       position: 'top-right',
+    //       autoClose: 5000,
+    //       hideProgressBar: false,
+    //       closeOnClick: true,
+    //       pauseOnHover: true,
+    //       draggable: true,
+    //       progress: undefined,
+    //     })
+    //     localStorage.setItem(
+    //       'auth_user',
+    //       JSON.stringify({
+    //         token: res.data.token,
+    //         user: res.data.user,
+    //       })
+    //     )
+    //     history.push('/restaurant')
+    //   })
+    //   .catch((err) => {
+    //     // console.log(err);
+    //     toast.error(err.response.data.message, {
+    //       position: 'top-right',
+    //       autoClose: 5000,
+    //       hideProgressBar: false,
+    //       closeOnClick: true,
+    //       pauseOnHover: true,
+    //       draggable: true,
+    //       progress: undefined,
+    //     })
+    //   })
   }
 
   return (
@@ -85,11 +83,11 @@ export default function LoginForm() {
               error={errors.email ? true : false}
               helperText={
                 errors.email ? (
-                  <span>{t("email.label")} {t("required")}  & {t("email.label")}  {t("valid")}</span>
+                  <span>Email is required</span>
                 ) : null
               }
               fullWidth
-              label={t('email.label')}
+              label={'Email'}
               autoComplete="email"
               autoFocus
             />
@@ -109,10 +107,10 @@ export default function LoginForm() {
               margin="normal"
               error={errors.password ? true : false}
               helperText={
-                errors.password ? <span>{t('password.label')} {t("required")}  </span> : null
+                errors.password ? <span>Password is required</span> : null
               }
               fullWidth
-              label={t('password.label')}
+              label={'Password'}
               type="password"
               id="password"
               onInput={(e) => {
@@ -130,14 +128,14 @@ export default function LoginForm() {
         {lengthTrue ? (
           length < 8 ? (
             <p style={{ marginTop: 0, color: 'red' }}>
-              {t("minLength")}
+              {'Password Lenght must be 8 characters'}
             </p>
           ) : null
         ) : null}
 
         <FormControlLabel
           control={<Checkbox value="remember" color="primary" />}
-          label={t('rememberMe.label')}
+          label={'Remeber me'}
         />
         <Button
           type="submit"
@@ -146,12 +144,12 @@ export default function LoginForm() {
           color="primary"
           className={classes.submit}
         >
-          {t('signIn.label')}
+          Login
         </Button>
         <Grid container>
           <Grid item xs>
-            <Link  style={{textDecoration:"none"}}to={'/forgot-password'} variant="body2">
-              {t('forgotPassword.label')}
+            <Link style={{ textDecoration: "none" }} to={'/forgot-password'} variant="body2">
+              {'Forget Password'}
             </Link>
           </Grid>
           <Grid item>

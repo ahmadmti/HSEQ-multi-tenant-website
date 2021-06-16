@@ -10,7 +10,9 @@ module.exports.resolve = function (req, res, next) {
         next();
     } else {
         try {
+            console.log(subdomain(req))
             let connection = getConnectionBySlug(subdomain(req));
+            console.log(connection)
             if (connection)
                 nameSpace.run(() => {
                     nameSpace.set('connection', connection);

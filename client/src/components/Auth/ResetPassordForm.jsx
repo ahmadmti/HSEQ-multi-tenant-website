@@ -1,12 +1,8 @@
 import React from 'react'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Checkbox from '@material-ui/core/Checkbox'
-import Grid from '@material-ui/core/Grid'
 import { makeStyles } from '@material-ui/core/styles'
 import { useHistory, Link, useParams } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
 import { resetPassword } from '../../api/api.js'
 import { useForm, Controller } from 'react-hook-form'
 import { toast } from 'react-toastify'
@@ -28,42 +24,40 @@ export default function ResetPasswordForm() {
   const [length, setLength] = React.useState(0)
   const [lengthTrue, setLengthTrue] = React.useState(false)
   let { id, token } = useParams();
-  console.log(id)
-  const { t } = useTranslation()
 
   const onSubmit = (data) => {
-    data.id = id;
-    data.token = token;
-    setLengthTrue(true)
-    if (length >= "8") {
-      resetPassword(data).then((res) => {
-        // console.log(res);
-        toast.success(res.data.message, {
-          position: 'top-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-        })
-        history.push('/login')
+    // data.id = id;
+    // data.token = token;
+    // setLengthTrue(true)
+    // if (length >= "8") {
+    //   resetPassword(data).then((res) => {
+    //     // console.log(res);
+    //     toast.success(res.data.message, {
+    //       position: 'top-right',
+    //       autoClose: 5000,
+    //       hideProgressBar: false,
+    //       closeOnClick: true,
+    //       pauseOnHover: true,
+    //       draggable: true,
+    //       progress: undefined,
+    //     })
+    //     history.push('/login')
 
 
-      })
-        .catch((err) => {
-          // console.log(err);
-          toast.error(err.response.data.message, {
-            position: 'top-right',
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-          })
-        })
-    }
+    //   })
+    //     .catch((err) => {
+    //       // console.log(err);
+    //       toast.error(err.response.data.message, {
+    //         position: 'top-right',
+    //         autoClose: 5000,
+    //         hideProgressBar: false,
+    //         closeOnClick: true,
+    //         pauseOnHover: true,
+    //         draggable: true,
+    //         progress: undefined,
+    //       })
+    //     })
+    // }
 
 
   }
@@ -83,10 +77,10 @@ export default function ResetPasswordForm() {
               margin="normal"
               error={errors.password ? true : false}
               helperText={
-                errors.password ? <span>{t('password.label')} {t("required")}  </span> : null
+                errors.password ? <span>Password Is required  </span> : null
               }
               fullWidth
-              label={t('new_password')}
+              label={'New Password'}
               type="password"
               id="password"
               onInput={(e) => {
@@ -104,7 +98,7 @@ export default function ResetPasswordForm() {
         {lengthTrue ? (
           length < 8 ? (
             <p style={{ marginTop: 0, color: 'red' }}>
-              {t("minLength")}
+              Password Must b * character
             </p>
           ) : null
         ) : null}
@@ -117,7 +111,7 @@ export default function ResetPasswordForm() {
           color="primary"
           className={classes.submit}
         >
-          {t('submit.label')}
+          Submit
         </Button>
 
       </form>

@@ -20,6 +20,8 @@ display:block;
 height:auto;
 max-width:150px;
 `;
+
+
 export default function Register() {
     const classes = useStyles();
 
@@ -29,7 +31,6 @@ export default function Register() {
             <div className={classes.paper}>
                 <LOGO src={Logo} />
                 <RegisterFrom />
-
             </div>
 
         </Container>
