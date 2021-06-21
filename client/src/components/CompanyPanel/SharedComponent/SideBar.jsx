@@ -18,7 +18,7 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import FooterContent from '../../FooterContent/FooterContent';
-import Logo from '../../../assets/images/option 1.png';
+// import Logo from '../../../assets/images/option 1.png';
 import styled from 'styled-components'
 import { Link } from 'react-router-dom';
 import NavItem from './NavItem';
@@ -28,7 +28,7 @@ import CompanyContext from '../../../context/CompanyContext';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import Badge from '@material-ui/core/Badge';
 import NotificationList from './NotificationList';
-import { getNotifications } from '../../../api/api'
+// import { getNotifications } from '../../../api/api'
 import { useTranslation } from 'react-i18next';
 
 const drawerWidth = 270;
@@ -189,16 +189,16 @@ export default function MiniDrawer(props) {
         // console.log(err)
       })
   };
-  const getnotifications = () => {
-    getNotifications()
-      .then(res => {
-        setNotification([...res.data.notifications])
-      })
-      .catch(err => console.log(err));
-  }
+  // const getnotifications = () => {
+  //   getNotifications()
+  //     .then(res => {
+  //       setNotification([...res.data.notifications])
+  //     })
+  //     .catch(err => console.log(err));
+  // }
   useEffect(() => {
     sideBar();
-    getnotifications();
+    // getnotifications();
   }, []);
 
   return (
@@ -253,7 +253,7 @@ export default function MiniDrawer(props) {
               style={{ maxWidth: "300px", minWidth: "300px", width: '100%' }}
             >
 
-              <NotificationList readNotification={() => getnotifications()} notifications={notifications} />
+              {/* <NotificationList readNotification={() => getnotifications()} notifications={notifications} /> */}
 
             </Menu>
 

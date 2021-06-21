@@ -39,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 export default function NavNestedItem(props) {
+  console.log(props)
   const classes = useStyles();
   const { t } = useTranslation();
 
@@ -56,7 +57,7 @@ export default function NavNestedItem(props) {
         <i className={props.item.icon} ></i>
           {/* <EuroSymbolIcon /> */}
         </ListItemIcon>
-        <ListItemText primary={t(`${camelize(props.item.name.toLowerCase())}`)}/>
+        <ListItemText primary={props.item.name}/>
 
         {openItem ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
@@ -72,7 +73,7 @@ export default function NavNestedItem(props) {
                   <ListItemIcon>
                   <i className={item.icon} ></i>
                   </ListItemIcon>
-                  <ListItemText primary={t(`${camelize(item.name.toLowerCase())}`)}/>
+                  <ListItemText primary={item.name}/>
 
                 
                 </ListItem>

@@ -4,7 +4,7 @@ import Form from '../../../components/CompanyPanel/UserManagement/AddUser';
 export default function AddUser() {
     return (
         <div>
-            <PageheadTitle title={'CREATE USERS'} />
+            <PageheadTitle title={'CREATE USER'} />
 
             <Form></Form>
 

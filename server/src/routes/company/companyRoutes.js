@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 
 
-router.get('/get-company', (req, res) => {
+router.get('/get-item', (req, res) => {
     res.send('vfcd');
 })
 

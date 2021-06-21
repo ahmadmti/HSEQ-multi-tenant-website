@@ -31,39 +31,39 @@ export default function LoginForm() {
   const onSubmit = (data) => {
     // console.log(data)
     setLengthTrue(true)
-    // login(data)
-    //   .then((res) => {
-    //     // console.log(res);
-    //     toast.success(res.data.message, {
-    //       position: 'top-right',
-    //       autoClose: 5000,
-    //       hideProgressBar: false,
-    //       closeOnClick: true,
-    //       pauseOnHover: true,
-    //       draggable: true,
-    //       progress: undefined,
-    //     })
-    //     localStorage.setItem(
-    //       'auth_user',
-    //       JSON.stringify({
-    //         token: res.data.token,
-    //         user: res.data.user,
-    //       })
-    //     )
-    //     history.push('/restaurant')
-    //   })
-    //   .catch((err) => {
-    //     // console.log(err);
-    //     toast.error(err.response.data.message, {
-    //       position: 'top-right',
-    //       autoClose: 5000,
-    //       hideProgressBar: false,
-    //       closeOnClick: true,
-    //       pauseOnHover: true,
-    //       draggable: true,
-    //       progress: undefined,
-    //     })
-    //   })
+    login(data)
+      .then((res) => {
+        console.log(res);
+        toast.success(res.data.message, {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        })
+        localStorage.setItem(
+          'auth_user',
+          JSON.stringify({
+            token: res.data.token,
+            user: res.data.user,
+          })
+        )
+        history.push('/restaurant')
+      })
+      .catch((err) => {
+        // console.log(err);
+        toast.error(err.response.data.message, {
+          position: 'top-right',
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        })
+      })
   }
 
   return (

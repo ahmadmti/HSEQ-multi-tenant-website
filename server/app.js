@@ -2,7 +2,7 @@
 
 const express = require('express')
 require('./src/env')
-const { webRoutes, authRoute, adminRoutes, companyRoutes } = require('./src/routes');
+const { webRoutes, authRoute, adminRoutes, MenuRoutes, companyRoutes, userManagement } = require('./src/routes');
 const path = require('path')
 const compression = require('compression')
 const handlebars = require('express-handlebars')
@@ -38,23 +38,23 @@ const server = http.createServer(app);
 app.locals.domain = 'geeklone.com'
 
 app.use(
-  session({
-    secret: 'HSEQ',
-    saveUninitialized: true,
-    resave: true,
-  })
+    session({
+        secret: 'HSEQ',
+        saveUninitialized: true,
+        resave: true,
+    })
 )
 
 app.use(cors({
-  credentials: true,
-  origin: function (origin, callback) {
-    callback(null, true); // allow these domains
-  }
+    credentials: true,
+    origin: function(origin, callback) {
+        callback(null, true); // allow these domains
+    }
 }))
 
-app.use(function (req, res, next) {
-  res.locals.session = req.session
-  next()
+app.use(function(req, res, next) {
+    res.locals.session = req.session
+    next()
 })
 
 app.use(cookieParser())
@@ -62,10 +62,10 @@ app.use(cookieParser())
 app.use(flash())
 
 app.use(
-  bodyParser.json({
-    extended: true,
-    limit: '5mb',
-  })
+    bodyParser.json({
+        extended: true,
+        limit: '5mb',
+    })
 )
 
 
@@ -91,27 +91,27 @@ app.set('views', path.join(__dirname, 'src/views'))
 
 
 app.engine(
-  'hbs',
-  handlebars({
-    defaultLayout: 'main',
-    extname: '.hbs',
-    partialsDir: __dirname + '/src/views/partials/',
-    helpers: {
-      section: function (name, options) {
-        if (!this._sections) {
-          this._sections = {};
-          this._sections[name] = options.fn(this);
-          return null;
+    'hbs',
+    handlebars({
+        defaultLayout: 'main',
+        extname: '.hbs',
+        partialsDir: __dirname + '/src/views/partials/',
+        helpers: {
+            section: function(name, options) {
+                if (!this._sections) {
+                    this._sections = {};
+                    this._sections[name] = options.fn(this);
+                    return null;
+                }
+            },
+            shortif: (condtion, ifValue, elseValue) => {
+                if (condtion)
+                    return ifValue
+                else
+                    return elseValue
+            }
         }
-      },
-      shortif: (condtion, ifValue, elseValue) => {
-        if (condtion)
-          return ifValue
-        else
-          return elseValue
-      }
-    }
-  })
+    })
 )
 
 app.set('view engine', 'hbs')
@@ -122,12 +122,19 @@ connectAllDb()
 
 // *** API Routes
 app.use('/api/company/', companyRoutes);
+app.use('/api/users/', userManagement);
+
+
+
 
 // Web Routes
 app.use('/v1/auth/', authRoute)
 app.use('/v1/', webRoutes)
 app.use('/v1/admin/', adminRoutes)
 
+app.use('/api/auth/', authRoute)
+
+app.use('/api/menu/', MenuRoutes)
 
 
 //DataBase Backup
@@ -135,12 +142,12 @@ app.use('/v1/admin/', adminRoutes)
 
 // Sub Domains handler Routes
 app.get('*', (req, res) => {
-  if (hasSubDomain(req)) {
-    return res.send('Subdomin Working');
-    res.sendFile(path.join(__dirname, './build', 'index.html'))
-  } else {
-    res.redirect(`${process.env.DEFAULT_REDIRECT}`)
-  }
-})
-// *** Listen
+        if (hasSubDomain(req)) {
+            return res.send('Subdomin Working');
+            res.sendFile(path.join(__dirname, './build', 'index.html'))
+        } else {
+            res.redirect(`${process.env.DEFAULT_REDIRECT}`)
+        }
+    })
+    // *** Listen
 server.listen(PORT, () => console.log(`Server is running on Port ${PORT}`))

@@ -1,6 +1,6 @@
 import React, { useEffect, useContext } from 'react'
 import $ from 'jquery';
-// import { getUsers, removeUser } from '../../../api/api';
+import { getUsers, removeUser } from '../../../api/api';
 import ToastContext from '../../../context/ToastContext';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -11,6 +11,7 @@ import Modal from '../SharedComponent/Modal';
 import EditUser from './AddUser';
 import { useDispatch } from "react-redux";
 import { toggle } from '../../../actions/pacerActions';
+import Chip from '@material-ui/core/Chip';
 
 export default function TableList() {
 
@@ -25,19 +26,19 @@ export default function TableList() {
 
     const removeItem = (id) => {
         dispatch(toggle())
-        // removeUser(id)
-        //     .then((res) => {
-        //         dispatch(toggle())
-        //         toast.success(res.data.message, toastOptions);
-        //         $('#user_table').dataTable().fnDestroy();
-        //         users()
-        //     })
-        //     .catch(err => {
-        //         console.log(err);
-        //         dispatch(toggle())
-        //         if (err.response && err.response.data)
-        //             toast.error(err.response.data.error, toastOptions);
-        //     })
+        removeUser(id)
+            .then((res) => {
+                dispatch(toggle())
+                toast.success(res.data.message, toastOptions);
+                $('#user_table').dataTable().fnDestroy();
+                users()
+            })
+            .catch(err => {
+                console.log(err);
+                dispatch(toggle())
+                if (err.response && err.response.data)
+                    toast.error(err.response.data.error, toastOptions);
+            })
     }
     const editItem = (item) => {
         setEditRow({ ...item });
@@ -54,62 +55,25 @@ export default function TableList() {
 
     const users = () => {
         dispatch(toggle())
-        // getUsers()
-        //     .then(res => {
-        //         dispatch(toggle())
-        //         setUser([...res.data.users]);
+        getUsers()
+            .then(res => {
+                dispatch(toggle())
+                setUser([...res.data.users]);
 
-        //         if ($.fn.dataTable.isDataTable('#user_table')) {
+                if ($.fn.dataTable.isDataTable('#user_table')) {
 
-        //             $('#user_table').DataTable({
-        //                 "oLanguage": {
-        //                     "sInfo": t("sInfo"),
-        //                     "sZeroRecords": t('sZeroRecords'),
-        //                     "sInfoEmpty": t("sInfoEmpty"),
-        //                     "sEmptyTable": t('sEmptyTable'),
-        //                     "oPaginate": {
-        //                         "sFirst": t('sFirst'),
-        //                         "sPrevious": t('sPrevious'),
-        //                         "sNext": t('sNext'),
-        //                         "sLast": t('sLast'),
-        //                     },
-        //                     "sSearch": t('tabel.sSearch'),
-        //                     "Show": t('tabel.Show'),
-        //                     "sLengthMenu": t('tabel.Show') + " _MENU_ " + t('tabel.entries'),
-        //                     "sInfoFiltered": "(" + t('filteredFrom') + " _MAX_ " + t('total_records') + ")",
+                    $('#user_table').DataTable();
+                }
+                else {
+                    $('#user_table').DataTable();
+                }
+                console.log(res);
+        })
+                .catch (err => {
+            dispatch(toggle())
+            console.log(err);
 
-        //                 }
-        //             });
-        //         }
-        //         else {
-        //             $('#user_table').DataTable({
-        //                 paging: true,
-        //                 "oLanguage": {
-        //                     "sInfo": t("sInfo"),
-        //                     "sZeroRecords": t('sZeroRecords'),
-        //                     "sInfoEmpty": t("sInfoEmpty"),
-        //                     "sEmptyTable": t('sEmptyTable'),
-        //                     "oPaginate": {
-        //                         "sFirst": t('sFirst'),
-        //                         "sPrevious": t('sPrevious'),
-        //                         "sNext": t('sNext'),
-        //                         "sLast": t('sLast'),
-        //                     },
-        //                     "sSearch": t('tabel.sSearch'),
-        //                     "Show": t('tabel.Show'),
-        //                     "sLengthMenu": t('tabel.Show') + " _MENU_ " + t('tabel.entries'),
-        //                     "sInfoFiltered": "(" + t('filteredFrom') + " _MAX_ " + t('total_records') + ")",
-
-        //                 }
-        //             });
-        //         }
-        //         console.log(res);
-        // })
-        //         .catch (err => {
-        //     dispatch(toggle())
-        //     console.log(err);
-
-        // })
+        })
     }
     return (
         <div>
@@ -121,6 +85,7 @@ export default function TableList() {
                         <th>Email</th>
                         <th>Phone</th>
                         <th>Roles</th>
+                        <th>Status</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -130,10 +95,13 @@ export default function TableList() {
                         user.map((item, index) => {
                             return (<tr key={index}>
                                 <td>{index + 1}</td>
-                                <td>{item.fname + item.lname}</td>
+                                <td>{item.name}</td>
                                 <td>{item.email}</td>
                                 <td>{item.phone_no}</td>
                                 <td>{item.role_name}</td>
+                                <td>
+                                {item.status ? <Chip label="Active" color="secondary" /> : <Chip label='In-Active' disabled />}
+                                </td>
                                 <td>
                                     <ButtonGroup size="small" variant="contained">
                                         <Button color="primary" onClick={() => editItem(item)}><EditIcon /></Button>

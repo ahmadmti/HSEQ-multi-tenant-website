@@ -32,7 +32,7 @@ export default function PageHeadTitle(props) {
         <Card className={classes.root, classes.titleWrapper}>
             <CardContent>
                 <Typography variant="h6" className={classes.title} color="textSecondary" >
-                    {t(`${camelize(props.title.toLowerCase())}.label`)}
+                    {props.title}
                 </Typography>
             </CardContent>
         </Card>

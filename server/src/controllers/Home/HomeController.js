@@ -4,7 +4,7 @@ const { createTenant } = require('../../utils/createDynamicTenant');
 
 
 let HomeController = {
-    getStates: async (req, res) => {
+    getStates: async(req, res) => {
         try {
             let { country_id } = req.body;
             let states = await commonDBConnection('states').select('*').where('country_id', country_id);
@@ -15,7 +15,7 @@ let HomeController = {
         }
 
     },
-    getCities: async (req, res) => {
+    getCities: async(req, res) => {
         try {
             let { state_id } = req.body;
             let cities = await commonDBConnection('cities').select('*').where('states_id ', state_id);
@@ -25,7 +25,7 @@ let HomeController = {
             res.sendStatus(500);
         }
     },
-    registerCompany: async (req, res) => {
+    registerCompany: async(req, res) => {
         try {
             let data = req.body;
             let tenantCreator = {
@@ -35,10 +35,7 @@ let HomeController = {
                 db_password: process.env.DB_PASSWORD,
                 db_port: process.env.DB_PORT || 3306
             }
-            await createTenant({
-                ...tenantCreator,
-                admin_email: data.admin_email, admin_name: data.admin_name, admin_password: data.admin_password
-            })
+
 
             let tenant = await commonDBConnection('tenants').insert({
                 company_name: data.company_name,
@@ -50,7 +47,21 @@ let HomeController = {
                 is_active: 1,
                 ...tenantCreator
             });
+            let roles = await commonDBConnection('roles').where('status', 1).where('name', 'app_admin').first();
 
+
+            let menus = await commonDBConnection('menus').whereNotNull('link').where('status', 1);
+            for (let row of menus) {
+                await commonDBConnection('permissions').insert({ menu_id: row.id, role_id: roles.id })
+            }
+            await createTenant({
+                ...tenantCreator,
+                admin_email: data.admin_email,
+                admin_name: data.admin_name,
+                admin_password: data.admin_password,
+                role_id: roles.id,
+                tenant_id: tenant[0],
+            })
             let tenantUser = await commonDBConnection('tenants_users').insert({
                 tenant_id: tenant[0],
                 admin_name: data.admin_name,
@@ -65,7 +76,7 @@ let HomeController = {
             return res.redirect('back');
         }
     },
-    checkDomain: async (req, res) => {
+    checkDomain: async(req, res) => {
         try {
             let { domain } = req.body;
             let tenants = await commonDBConnection('tenants').select('*').where('subdomain', domain);
@@ -86,7 +97,7 @@ let HomeController = {
             res.sendStatus(500);
         }
     },
-    checkCompany: async (req, res) => {
+    checkCompany: async(req, res) => {
         try {
             let { name } = req.body;
             let tenants = await commonDBConnection('tenants').select('*').where('company_name  ', name);
@@ -100,7 +111,7 @@ let HomeController = {
             res.sendStatus(500);
         }
     },
-    createCompanyForm: async (req, res) => {
+    createCompanyForm: async(req, res) => {
         try {
             let countries = await commonDBConnection('countries').select('*');
             res.render('admin/CreateCompany', {

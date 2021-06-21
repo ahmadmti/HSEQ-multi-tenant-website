@@ -9,6 +9,7 @@ function token() {
     return null;
 
 }
+
 function headers() {
     return {
         'Content-Type': 'application/json',
@@ -18,8 +19,9 @@ function headers() {
 // dasboard 
 
 export async function login({ email, password }) {
-    return await instance.post('/auth/login', { email, password });
+    return await instance.post('/auth/user-login', { email, password });
 }
+
 
 export async function changePassword({ old_password, new_password }) {
     return await instance.post('/auth/change-password', { old_password, new_password }, { headers: headers() });
@@ -47,11 +49,25 @@ export async function companyDetail(data) {
 }
 
 export async function loadSideBar() {
-    return await instance.get('/sidebar/get-item', { headers: headers() });
+    return await instance.get('/menu/get-item', { headers: headers() });
 }
 
 
+// user management 
 
 
-
-
+export async function roles() {
+    return await instance.get('/users/roles', { headers: headers() });
+}
+export async function createUser(data) {
+    return await instance.post('/users/create-user', data, { headers: headers() });
+}
+export async function getUsers() {
+    return await instance.get('/users/all-users', { headers: headers() });
+}
+export async function updateUser(data) {
+    return await instance.post('/users/update-user', data, { headers: headers() });
+}
+export async function removeUser(id) {
+    return await instance.post('/users/remove-user', { id }, { headers: headers() });
+}

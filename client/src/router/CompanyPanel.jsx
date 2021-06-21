@@ -6,7 +6,7 @@ const AddRole = React.lazy(() => import('../screens/CompanyPanel/UserManagement/
 const ViewRole = React.lazy(() => import('../screens/CompanyPanel/UserManagement/ViewRole'));
 const ViewUser = React.lazy(() => import('../screens/CompanyPanel/UserManagement/ViewUser'));
 const AddUser = React.lazy(() => import('../screens/CompanyPanel/UserManagement/AddUser'));
-const Configuration = React.lazy(() => import('../screens/CompanyPanel/Configuration/Configuration'));
+// const Configuration = React.lazy(() => import('../screens/CompanyPanel/Configuration/Configuration'));
 const Profile = React.lazy(() => import('../screens/CompanyPanel/Profile/Profile'));
 const ChangePassword = React.lazy(() => import('../screens/Auth/ChangePassword'));
 
@@ -31,7 +31,7 @@ function RestaurantRoutes() {
                 <Route path={`${path}/add-user`} component={AddUser} />
 
 
-                <Route path={`${path}/configuration`} component={Configuration} />
+                {/* <Route path={`${path}/configuration`} component={Configuration} /> */}
 
 
                 {/* <Route render={() => <Redirect to={`${path}/view-restaurant`} />} /> */}

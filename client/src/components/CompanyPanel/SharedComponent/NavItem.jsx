@@ -52,7 +52,7 @@ export default function NavItem(props) {
         <ListItemIcon>
         <i className={props.item.icon} ></i>
         </ListItemIcon>
-        <ListItemText primary={t(`${camelize(props.item.name.toLowerCase())}`)}/>
+        <ListItemText primary={props.item.name}/>
       </ListItem>
     </NavLink>
   )

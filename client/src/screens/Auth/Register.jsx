@@ -2,7 +2,7 @@ import React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import Logo from '../../assets/images/ResturantProLogo.png';
+// import Logo from '../../assets/images/ResturantProLogo.png';
 import styled from 'styled-components'
 import RegisterFrom from '../../components/Auth/RegisterForm';
 
@@ -29,7 +29,7 @@ export default function Register() {
         <Container component="main" maxWidth="xs">
             <CssBaseline />
             <div className={classes.paper}>
-                <LOGO src={Logo} />
+                {/* <LOGO src={Logo} /> */}
                 <RegisterFrom />
             </div>
 

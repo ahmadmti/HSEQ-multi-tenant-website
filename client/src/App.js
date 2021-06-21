@@ -61,10 +61,10 @@ function App() {
                 <CompanyContext.Provider value={company}>
                     <div className="App" >
                         <ToastContainer />
-                        <Backdrop className={classes.backdrop} open={pacer.open}>
+                        <Backdrop className={classes.backdrop} >
                             <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", fontWeight: "bold" }}>
                                 <CircularProgress />
-                                <p>{pacer.msg}</p>
+                                {/* <p>{pacer.msg}</p> */}
                             </div>
                         </Backdrop>
                         <BrowserRouter>

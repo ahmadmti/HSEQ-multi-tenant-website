@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import ToastContext from '../../../context/ToastContext';
 import { useForm, Controller } from "react-hook-form";
 import FormHelperText from '@material-ui/core/FormHelperText';
-// import { createUser, updateUser } from '../../../api/api';
+import { createUser, updateUser,roles } from '../../../api/api';
 import { toggle } from '../../../actions/pacerActions';
 import { useDispatch } from "react-redux";
 
@@ -61,47 +61,47 @@ export default function Form(props) {
 
     const create = (data) => {
         dispatch(toggle());
-        // createUser(data)
-        //     .then(res => {
-        //         dispatch(toggle());
-        //         toast.success(res.data.message, toastOptions);
+        createUser(data)
+            .then(res => {
+                dispatch(toggle());
+                toast.success(res.data.message, toastOptions);
 
-        //         reset({
-        //             'user_name': '',
-        //             'phone_number': '',
-        //             'role_id': '',
-        //             'email': '',
-        //             'password': '',
-        //             'status': ''
-        //         })
-        //     })
-        //     .catch(err => {
-        //         dispatch(toggle());
-        //         toast.error(err.response.data.error, toastOptions)
-        //     })
+                reset({
+                    'user_name': '',
+                    'phone_number': '',
+                    'role_id': '',
+                    'email': '',
+                    'password': '',
+                    'status': ''
+                })
+            })
+            .catch(err => {
+                dispatch(toggle());
+                toast.error(err.response.data.error, toastOptions)
+            })
         console.log(data)
     }
 
     const update = (data) => {
         dispatch(toggle());
-        // updateUser(data)
-        //     .then(res => {
-        //         dispatch(toggle());
-        //         toast.success(res.data.message, toastOptions);
-        //         props.onFormSubmit()
-        //         reset({
-        //             'user_name': '',
-        //             'phone_number': '',
-        //             'role_id': '',
-        //             'email': '',
-        //             'password': '',
-        //             'status': ''
-        //         })
-        //     })
-        //     .catch(err => {
-        //         dispatch(toggle());
-        //         toast.error(err.response.data.error, toastOptions)
-        //     })
+        updateUser(data)
+            .then(res => {
+                dispatch(toggle());
+                toast.success(res.data.message, toastOptions);
+                props.onFormSubmit()
+                reset({
+                    'user_name': '',
+                    'phone_number': '',
+                    'role_id': '',
+                    'email': '',
+                    'password': '',
+                    'status': ''
+                })
+            })
+            .catch(err => {
+                dispatch(toggle());
+                toast.error(err.response.data.error, toastOptions)
+            })
         console.log(data)
     }
 
@@ -119,7 +119,7 @@ export default function Form(props) {
     const addEditMode = (data) => {
         if (data) {
 
-            setValue('user_name', props.data.fname + props.data.lname, { shouldValidate: true })
+            setValue('user_name', props.data.name, { shouldValidate: true })
             setValue('phone_number', props.data.phone_no, { shouldValidate: true })
             setValue('role_id', props.data.role_id, { shouldValidate: true })
             setValue('email', props.data.email, { shouldValidate: true })
@@ -132,15 +132,15 @@ export default function Form(props) {
 
     const getRoles = () => {
         dispatch(toggle());
-        // roles()
-        //     .then(res => {
-        //         dispatch(toggle());
-        //         setRoles([...res.data.roles]);
+        roles()
+            .then(res => {
+                dispatch(toggle());
+                setRoles([...res.data.roles]);
 
-        //     }).catch(err => {
-        //         dispatch(toggle());
-        //         toast.error(err.response.data.error, toastOptions)
-        //     })
+            }).catch(err => {
+                dispatch(toggle());
+                toast.error(err.response.data.error, toastOptions)
+            })
     }
     return (
         <React.Fragment>
@@ -257,7 +257,7 @@ export default function Form(props) {
                                                     id="role_id"
                                                 >
                                                     {
-                                                        role.map((item, index) => <MenuItem key={index} value={item.id}>{item.name}</MenuItem>)
+                                                        role.map((item, index) => <MenuItem key={index} value={item.id}>{item.display_name}</MenuItem>)
                                                     }
                                                 </Select>} control={control}
                                                 rules={{

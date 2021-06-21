@@ -6,7 +6,7 @@ import CardContent from '@material-ui/core/CardContent'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import Divider from '@material-ui/core/Divider'
-import { markAsRead as read } from '../../../api/api'
+// import { markAsRead as read } from '../../../api/api'
 import ToastContext from '../../../context/ToastContext'
 import { toast } from 'react-toastify'
 import { useTranslation } from 'react-i18next';
@@ -36,17 +36,17 @@ export default function NotificationModal(props) {
   }
   const { t } = useTranslation();
 
-  const markAsRead = () => {
-    read(props.notification.join_id)
-      .then((res) => {
-        toast.success(res.data.message, toastOption);
-        props.readNotification()
-      })
-      .catch((error) => {
-        toast.error(error.response.data.error, toastOption)
-      })
-    console.log(props.notification.id)
-  }
+  // const markAsRead = () => {
+  //   read(props.notification.join_id)
+  //     .then((res) => {
+  //       toast.success(res.data.message, toastOption);
+  //       props.readNotification()
+  //     })
+  //     .catch((error) => {
+  //       toast.error(error.response.data.error, toastOption)
+  //     })
+  //   console.log(props.notification.id)
+  // }
 
   return (
     <Card className={classes.root} variant="outlined">
@@ -64,9 +64,9 @@ export default function NotificationModal(props) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small" variant="contained" color="primary" onClick={markAsRead}>
+        {/* <Button size="small" variant="contained" color="primary" onClick={markAsRead}>
           {t('markAsRead')}
-        </Button>
+        </Button> */}
       </CardActions>
     </Card>
   )
