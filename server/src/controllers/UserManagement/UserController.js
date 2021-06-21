@@ -113,7 +113,7 @@ let UserController = {
                 .innerJoin(`${process.env.DB_DATABASE}.roles`, 'users.role_id', `${process.env.DB_DATABASE}.roles.id`)
                 .where(`${process.env.DB_DATABASE}.roles.status`, 1)
                 .select(['users.*', `${process.env.DB_DATABASE}.roles.id as role_id`, `${process.env.DB_DATABASE}.roles.display_name as role_name`]);
-            console.log(users)
+
             res.status(200).json({ users })
 
         } catch (e) {
@@ -127,7 +127,7 @@ let UserController = {
 
             let users = await getConnection()('users')
                 .select(['users.*']);
-            console.log(users)
+
             res.status(200).json({ users })
 
         } catch (e) {

@@ -49,10 +49,10 @@ let AuthController = {
                 }
                 let token = generateAccessToken({ data })
                 res.json({ message: "loginSuccess", token, user: data })
-            } else res.status(403).json({ message: "notActive" })
+            } else res.status(403).json({ message: "User Not Active" })
         } else {
             res.status(404).json({
-                message: "invalidCrd",
+                message: "Invalid Credentials",
             })
         }
     },

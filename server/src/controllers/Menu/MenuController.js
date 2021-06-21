@@ -27,14 +27,13 @@ let MenuController = {
     getMenus: async(req, res) => {
         try {
 
-            let tenant = req.user;
 
             // let menuItem = [];
             // ${tenant.role_id}
             // let assignMenus = await commonDBConnection.raw(`SELECT m.* FROM ${process.env.DB_DATABASE}.menus m  INNER JOIN ${process.env.DB_DATABASE}.permissions p ON p.menu_id = m.id WHERE p.role_id = 2  ORDER BY order_no ASC`);
             let menuItem = [];
-            // req.user.data.rights
-            let assignMenus = await commonDBConnection('permissions').where('role_id', '2')
+            //
+            let assignMenus = await commonDBConnection('permissions').where('role_id', req.user.data.rights)
                 .innerJoin(`${process.env.DB_DATABASE}.menus`, 'permissions.menu_id', 'menus.id')
                 .where('status', 1)
                 .orderBy('order_no', 'ASC')
